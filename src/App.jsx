@@ -76,7 +76,7 @@ function App() {
   const cartCount = cartItems.reduce((total,item)=> total+item.quantity,0);
 
 //CALCULATE TOTAL PRICE
-  const cartTotal=cartItems.reduce((total, item)=> total+item.price*item.quantity,0);
+  const cartTotal=cartItems.reduce((total, item)=> total+item.price*item.quantity,1);
 
 
 
@@ -170,7 +170,7 @@ if (sortBy === "price-low") {
                 <img src={item.image} alt={item.name} />
                 <div className="cart-item-details">
                   <h4>{item.name}</h4>
-                  <p>₹{item.price}</p>
+                  <p>₹{item.price*cartCount}</p>
                   <div className="quantity-controls">
                     <button onClick={() => updateQuantity(item.id, -1)}>-</button>
                     <span>{item.quantity}</span>
