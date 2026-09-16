@@ -9,8 +9,27 @@ function App() {
   const allBrandd=[...new Set(products.map((p)=> p.brand))];
   //STATES
   //CART-ARRAY OF PRODUCTS IN CART
-  const[cartItems, setCartItems]=useState([]);
-  //WISHLIST-ARRAY OF PRODUCT IDS THAT ARE WISHLISTED
+  const[cartItems, setCartItems]=useState(()=>
+  {
+    const saveCart=localStorage.getItem("techstore-cart");
+
+    if(saveCart)
+    {
+      try{
+        return JSON.parse(saveCart);
+      }catch(error)
+      {
+        console.error("problem!!!", error);
+        return[]
+      }
+    }
+    return[];
+  });
+
+  useEffect(()=> {
+    localStorage.setItem("techstore-cart", JSON.stringify(cartCount));
+  }, [cartItems])
+  //WISHLIS{T-ARRAY OF PRODUCT IDS THAT ARE WISHLISTED
   const[wishlist, setWishlist]=useState([]);
   //SEARCH-WHAT USER TYPE IN USER BOX
   const[searchTerm, setSearchTerm]=useState("");
