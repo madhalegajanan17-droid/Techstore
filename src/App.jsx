@@ -27,8 +27,9 @@ function App() {
   });
 
   useEffect(()=> {
-    localStorage.setItem("techstore-cart", JSON.stringify(cartCount));
-  }, [cartItems])
+    localStorage.setItem("techstore-cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+  
   //WISHLIS{T-ARRAY OF PRODUCT IDS THAT ARE WISHLISTED
   const[wishlist, setWishlist]=useState([]);
   //SEARCH-WHAT USER TYPE IN USER BOX
