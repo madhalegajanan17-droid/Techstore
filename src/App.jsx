@@ -1,7 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import ProductCard from "./components/ProductCard.jsx";
 import products from "./components/arrya.js";
+
+import NavLogo from "./components/NAV-BAR/NavLogo.jsx";
+import NavLists from "./components/NAV-BAR/NavLists.jsx";
+import User from "./components/NAV-BAR/User.jsx";
+import Cart from "./components/NAV-BAR/Cart.jsx";
+import Hero from "./components/HERO-SECTION/Hero.jsx";
+import BestSellers from "./components/SECTIONS/BestSellers.jsx";
+import Footer from "./components/SECTIONS/Footer.jsx";
 
 function App() {
 
@@ -150,170 +157,47 @@ if (sortBy === "price-low") {
 
       {/* Navigation Bar */}
       <nav className="navbar">
-
-        <div className="logo">
-          <a href="/">Tech Store</a>
-        </div>
-
-        <ul className="nav-links">
-          <li><a href="#products">Products</a></li>
-          <li><a href="#deals">Deals</a></li>
-          <li><a href="#support">Support</a></li>
-          <li><a href="#about">About</a></li>
-          <li className="cart-nav" style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <button 
-              onClick={() => setIsDarkMode(!isDarkMode)} 
-              style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer', display: 'flex' }}
-              title="Toggle Dark Mode"
-            >
-              {isDarkMode ? (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-              ) : (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-              )}
-            </button>
-            <div onClick={() => setIsCartOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', cursor: 'pointer' }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-              <span className="cart-count" style={{ backgroundColor: '#e74c3c', color: 'white', borderRadius: '50%', padding: '0.1rem 0.5rem', fontSize: '0.9rem' }}>{cartCount}</span>
-            </div>
-          </li>
-        </ul>
-
+        <NavLogo />
+       
+        <NavLists 
+          isDarkMode={isDarkMode} 
+          setIsDarkMode={setIsDarkMode} 
+          setIsCartOpen={setIsCartOpen} 
+          cartCount={cartCount} 
+        />
+         <User />
       </nav>
 
       {/* Cart Sidebar */}
-      <div className={`cart-sidebar ${isCartOpen ? 'open' : ''}`}>
-        <div className="cart-header">
-          <h2>Your Cart</h2>
-          <button onClick={() => setIsCartOpen(false)} className="close-cart">✕</button>
-        </div>
-        
-        <div className="cart-items">
-          {cartItems.length === 0 ? (
-            <p>Your cart is empty.</p>
-          ) : (
-            cartItems.map(item => (
-              <div key={item.id} className="cart-item">
-                <img src={item.image} alt={item.name} />
-                <div className="cart-item-details">
-                  <h4>{item.name}</h4>
-                  <p>₹{item.price}</p>
-                  <div className="quantity-controls">
-                    <button onClick={() => updateQuantity(item.id, -1)}>-</button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => updateQuantity(item.id, 1)}>+</button>
-                  </div>
-                </div>
-                <button onClick={() => removeFromCart(item.id)} className="remove-item" title="Remove">🗑️</button>
-              </div>
-            ))
-          )}
-        </div>
-        
-        <div className="cart-footer">
-          <h3>Total: ₹{cartTotal}</h3>
-          <button className="checkout-btn" disabled={cartItems.length === 0}>Proceed to Checkout</button>
-        </div>
-      </div>
+      <Cart 
+        isCartOpen={isCartOpen} 
+        setIsCartOpen={setIsCartOpen} 
+        cartItems={cartItems} 
+        updateQuantity={updateQuantity} 
+        removeFromCart={removeFromCart} 
+        cartTotal={cartTotal} 
+      />
 
 
       {/* Hero Section */}
-      <section className="hero">
-
-        <div>
-          <h1>Premium Products</h1>
-
-          <p>
-            Discover our best products at amazing prices.
-          </p>
-
-          <a href="#products"><button>Shop Now</button></a>
-        </div>
-
-      </section>
-
-
-      {/* Statistics */}
-      <section className="stats">
-
-        <div>
-          <h2>50K+</h2>
-          <p>Happy Customers</p>
-        </div>
-
-        <div>
-          <h2>200+</h2>
-          <p>Products</p>
-        </div>
-
-        <div>
-          <h2>Premium</h2>
-          <p>Quality Products</p>
-        </div>
-
-      </section>
+      <Hero />
 
 
       {/* Product Section */}
-      <section className="products-section" id="products">
-
-        <div className="section-heading">
-
-          <h2 ref={topRef}>Best Sellers </h2>
-
-          <p>
-            Our most popular products
-          </p>
-
-        </div>
-
-
-        <div className="filters" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '2rem' }}>
-          <input 
-            type="text" 
-            placeholder="Search products..." 
-            value={searchTerm} 
-            onChange={(e) => setSearchTerm(e.target.value)} 
-            style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-          <select value={selectBrand} onChange={(e) => setSelectBrand(e.target.value)} style={{ padding: '0.5rem', borderRadius: '4px' }}>
-            <option value="All">All Brands</option>
-            {allBrandd.map(brand => <option key={brand} value={brand}>{brand}</option>)}
-          </select>
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} style={{ padding: '0.5rem', borderRadius: '4px' }}>
-            <option value="">Sort By</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="rating">Top Rated</option>
-          </select>
-        </div>
-
-
-        <div className="products-container">
-
-          {filteredProducts.map((data) => (
-
-            <ProductCard
-              key={data.id}
-              id={data.id}
-              image={data.image}
-              name={data.name}
-              price={data.price}
-              originalPrice={data.originalPrice}
-              discount={data.discount}
-              rating={data.rating}
-              bestSeller={data.bestSeller}
-              brand={data.brand}
-              isWishlisted={wishlist.includes(data.id)}
-              onAddToCard={() => onAddToCard(data)}
-              onToggleWishlist={() => toggleWishlist(data.id)}
-            />
-
-          ))}
-
-        </div>
-
-      </section>
+      <BestSellers 
+        topRef={topRef}
+        searchTerm={searchTerm} 
+        setSearchTerm={setSearchTerm}
+        selectBrand={selectBrand} 
+        setSelectBrand={setSelectBrand}
+        sortBy={sortBy} 
+        setSortBy={setSortBy}
+        allBrandd={allBrandd}
+        filteredProducts={filteredProducts}
+        wishlist={wishlist}
+        onAddToCard={onAddToCard}
+        toggleWishlist={toggleWishlist}
+      />
 
       {/* Toast Notification */}
       {toastMessage && (
@@ -322,14 +206,7 @@ if (sortBy === "price-low") {
         </div>
       )}
 
-      <footer>
-        <p>&copy; 2026 TechStore </p>
-        <button onClick={scrollonTop} style={{
-          position: "footer",
-          bottom: "30px",
-          right: "30px"
-        }}>TOP^</button>
-      </footer>
+      <Footer scrollonTop={scrollonTop} />
     </div>
     
   );
