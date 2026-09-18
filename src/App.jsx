@@ -7,6 +7,13 @@ function App() {
 
 // ALLBRANDS
   const allBrandd=[...new Set(products.map((p)=> p.brand))];
+
+
+  const topRef=useRef(null);
+  function scrollonTop()
+  {
+    topRef.current.scrollIntoView();
+  }
   //STATES
   //CART-ARRAY OF PRODUCTS IN CART
   const[cartItems, setCartItems]=useState(()=>
@@ -139,7 +146,7 @@ if (sortBy === "price-low") {
 }
 
   return (
-    <div className="app">
+    <div className="app" >
 
       {/* Navigation Bar */}
       <nav className="navbar">
@@ -252,7 +259,7 @@ if (sortBy === "price-low") {
 
         <div className="section-heading">
 
-          <h2>Best Sellers</h2>
+          <h2 ref={topRef}>Best Sellers </h2>
 
           <p>
             Our most popular products
@@ -315,7 +322,16 @@ if (sortBy === "price-low") {
         </div>
       )}
 
+      <footer>
+        <p>&copy; 2026 TechStore </p>
+        <button onClick={scrollonTop} style={{
+          position: "footer",
+          bottom: "30px",
+          right: "30px"
+        }}>TOP^</button>
+      </footer>
     </div>
+    
   );
 }
 

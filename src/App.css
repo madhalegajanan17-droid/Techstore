@@ -385,3 +385,7 @@ body.dark-mode .wishlisted {
 body.dark-mode .wishlisted.active {
   border-color: #ff4b4b;
 }
+
+html{
+  scroll-behavior: smooth;
+}
